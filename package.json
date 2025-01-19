@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon backend/app.js",
-    "prod": "cross-env NODE_ENV=PRODUCTION nodemon backend/app.js"
+    "prod": "cross-env NODE_ENV=PRODUCTION nodemon backend/app.js",
+    "seeder":"node backend/seeder/seeder.js"
   },
   "author": "Dilley Andrade",
   "license": "ISC",
