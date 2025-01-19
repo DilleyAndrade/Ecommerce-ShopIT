@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import productRoutes from "./routes/productRoutes.js";
 import { connectDatabase } from "./config/dbConnect.js";
+import errorMiddleware from "./middlewares/error.js"
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.json())
 connectDatabase();
 
 app.use("/api/v1", productRoutes);
-
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
   console.log(
