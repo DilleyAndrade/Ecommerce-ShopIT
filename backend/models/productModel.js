@@ -14,7 +14,6 @@ const productSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "Please enter product description"],
-    maxLength: [200, "product description cannot exceed 200 characters"],
   },
   ratings: {
     type: Number,
@@ -84,7 +83,7 @@ const productSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: false,
   },
 },{timestamps: true}
 );
