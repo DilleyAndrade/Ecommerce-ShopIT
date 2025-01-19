@@ -8,10 +8,12 @@ export const getProducts = catchAsyncErrors(async (req, res) => {
   const apiFilters = new APIFilters(Product, req.query).search();
 
   let products = await apiFilters.query;
+  let filteredProductsCount = products.length
 
   //const listProducts = await Product.find();
   res.status(200).json({
     message: "All products",
+    filteredProductsCount,
     products,
   });
 });
