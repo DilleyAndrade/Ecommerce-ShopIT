@@ -4,6 +4,7 @@ import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { connectDatabase } from "./config/dbConnect.js";
 import errorMiddleware from "./middlewares/error.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -14,13 +15,15 @@ process.on("uncaughtException", (err) => {
 });
 
 dotenv.config({ path: "backend/config/config.env" });
-app.use(express.json());
+
 
 connectDatabase();
 
 app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 app.use(errorMiddleware);
+app.use(express.json());
+app.use(cookieParser())
 
 const server = app.listen(process.env.PORT, () => {
   console.log(
