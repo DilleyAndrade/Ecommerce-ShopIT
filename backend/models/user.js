@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -32,5 +33,15 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//Encriptar a senha do usuário antes de salvar
+userSchema.pre("save", async function (next) {
+  //Se a senha não for modificada, siga o fluxo normalmente
+  if (!this.isModified("password")) {
+    next();
+  }
+  //Se for modificada, encriptar antes de salvar
+  this.password = await bcrypt.hash(this.password, 10); //O 10 representa o poder de encriptação
+});
 
 export default mongoose.model("User", userSchema);

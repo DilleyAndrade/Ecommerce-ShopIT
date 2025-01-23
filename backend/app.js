@@ -1,25 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import productRoutes from "./routes/productRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import { connectDatabase } from "./config/dbConnect.js";
-import errorMiddleware from "./middlewares/error.js"
-
+import errorMiddleware from "./middlewares/error.js";
 
 const app = express();
 
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
   console.log(`ERROR: ${err}`);
   console.log("Shutting down due to uncaught exception");
   process.exit(1);
-})
-
+});
 
 dotenv.config({ path: "backend/config/config.env" });
-app.use(express.json())
+app.use(express.json());
 
 connectDatabase();
 
 app.use("/api/v1", productRoutes);
+app.use("/api/v1", authRoutes);
 app.use(errorMiddleware);
 
 const server = app.listen(process.env.PORT, () => {
@@ -29,11 +29,10 @@ const server = app.listen(process.env.PORT, () => {
 });
 
 //Handle Unhandled Promise rejection
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
   console.log(`ERROR: ${err}`);
-  console.log("Shutting down server due to Unhandled Promise Rejection ")
-  server.close(()=>{
-    process.exit(1)
-  })
-})
-
+  console.log("Shutting down server due to Unhandled Promise Rejection ");
+  server.close(() => {
+    process.exit(1);
+  });
+});
